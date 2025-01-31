@@ -34,7 +34,7 @@ profileBtn.addEventListener("click", () => {
   //const email = 
   //const password = 
 
-  console.log(signCheck);
+  console.log(localStorage);
   console.log(signCheck);
    
   if (signCheck) {
