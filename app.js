@@ -26,16 +26,16 @@ profileBtn.addEventListener("click", () => {
   window.location.href = "https://hulu-movie-app-log.vercel.app/";
 });
 
-window.addEventListener("load", () => {
-  let signCheck = localStorage.getItem("signData");
-  signCheck = JSON.parse(signCheck);
+// window.addEventListener("load", () => {
+//  let signCheck = localStorage.getItem("signData");
+//  signCheck = JSON.parse(signCheck);
 
-  if (signCheck) {
-    return;
-  } else {
-    window.location.href = "https://hulu-movie-app-log.vercel.app/";
-  }
-});
+//  if (signCheck) {
+//    return;
+//  } else {
+//    window.location.href = "https://hulu-movie-app-log.vercel.app/";
+//  }
+//});
 
 const xs = window.matchMedia("(max-width: 320px)");
 const x = window.matchMedia("(max-width: 375px)");
