@@ -28,6 +28,13 @@ profileBtn.addEventListener("click", () => {
 
  window.addEventListener("load", () => {
 
+const params = new URLSearchParams(window.location.search);
+const email = params.get("email");
+const password = params.get("password");
+
+   console.log(email);
+   console.log(password);
+   
   let signCheck = localStorage.getItem("signData");
   signCheck = JSON.parse(signCheck);
 
