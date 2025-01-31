@@ -27,16 +27,21 @@ profileBtn.addEventListener("click", () => {
 });
 
  window.addEventListener("load", () => {
+
   let signCheck = localStorage.getItem("signData");
   signCheck = JSON.parse(signCheck);
 
+  const email = signCheck.email;
+  const password = signCheck.password;
+   
   if (signCheck) {
     return;
   } else {
-    window.location.href = "https://hulu-movie-app-log.vercel.app/";
+    // window.location.href = "https://hulu-movie-app-log.vercel.app/";
+    console.log(signCheck);
+    console.log(email);
+    console.log(password);
   }
-
-   console.log(signCheck);
 });
 
 const xs = window.matchMedia("(max-width: 320px)");
