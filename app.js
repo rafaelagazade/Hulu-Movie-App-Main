@@ -36,6 +36,7 @@ profileBtn.addEventListener("click", () => {
 
   console.log(localStorage);
   console.log(signCheck);
+  console.log(sessionStorage);
    
   if (signCheck) {
     return;
