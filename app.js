@@ -31,16 +31,18 @@ profileBtn.addEventListener("click", () => {
   let signCheck = localStorage.getItem("signData");
   signCheck = JSON.parse(signCheck);
 
-  const email = signCheck.email;
-  const password = signCheck.password;
+  //const email = 
+  //const password = 
+
+  console.log(signCheck.getItem("email"));
+  console.log(signCheck.getItem("password"));
    
   if (signCheck) {
     return;
   } else {
     // window.location.href = "https://hulu-movie-app-log.vercel.app/";
-    console.log(signCheck);
-    console.log(email);
-    console.log(password);
+    console.log(signCheck.getItem("email"));
+    console.log(signCheck.getItem("password"));
   }
 });
 
