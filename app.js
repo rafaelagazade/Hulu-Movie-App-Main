@@ -23,7 +23,7 @@ const API_URL =
   "/discover/movie?77b75897bd6de248789745dbd1270fe7&&language=en-US&sort_by=popularity.desc";
 profileBtn.addEventListener("click", () => {
   localStorage.removeItem("signData");
-  window.location.href = "***";
+  window.location.href = "https://hulu-movie-app-log.vercel.app/";
 });
 
 window.addEventListener("load", () => {
@@ -33,7 +33,7 @@ window.addEventListener("load", () => {
   if (signCheck) {
     return;
   } else {
-    window.location.href = "***";
+    window.location.href = "https://hulu-movie-app-log.vercel.app/";
   }
 });
 
