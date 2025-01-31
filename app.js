@@ -34,15 +34,15 @@ profileBtn.addEventListener("click", () => {
   //const email = 
   //const password = 
 
-  console.log(signCheck.getItem("email"));
-  console.log(signCheck.getItem("password"));
+  console.log(signCheck);
+  console.log(signCheck);
    
   if (signCheck) {
     return;
   } else {
     // window.location.href = "https://hulu-movie-app-log.vercel.app/";
-    console.log(signCheck.getItem("email"));
-    console.log(signCheck.getItem("password"));
+    console.log(signCheck);
+    console.log(signCheck);
   }
 });
 
