@@ -35,6 +35,8 @@ profileBtn.addEventListener("click", () => {
   } else {
     window.location.href = "https://hulu-movie-app-log.vercel.app/";
   }
+
+   console.log(signCheck);
 });
 
 const xs = window.matchMedia("(max-width: 320px)");
