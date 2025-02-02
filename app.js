@@ -45,6 +45,8 @@ window.addEventListener("load", async function () {
 
     // Fetch users from API (make sure this function runs inside load event)
     const usersList = await getUserData();
+
+    
     
     if (!usersList.length) {
       console.error("No users found in the database.");
@@ -84,6 +86,8 @@ async function getUserData() {
 
     // Return users as an array
     return Array.isArray(data.record.users) ? data.record.users : [];
+
+    console.log("5")
   } catch (error) {
     console.error("Error fetching API data:", error);
     return []; // Return an empty array in case of an error
