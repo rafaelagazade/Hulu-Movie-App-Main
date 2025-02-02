@@ -26,33 +26,66 @@ profileBtn.addEventListener("click", () => {
   window.location.href = "https://hulu-movie-app-log.vercel.app/";
 });
 
- window.addEventListener("load", () => {
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
-const params = new URLSearchParams(window.location.search);
-const email = params.get("email");
-const password = params.get("password");
+ window.addEventListener("load", async () => {
+  // Get the query parameters passed from the login page
+  const urlParams = new URLSearchParams(window.location.search);
+  const email = urlParams.get('email');
+  const password = urlParams.get('password');
 
-   console.log(email);
-   console.log(password);
-   
-  let signCheck = localStorage.getItem("signData");
-  signCheck = JSON.parse(signCheck);
-
-  //const email = 
-  //const password = 
-
-  console.log(localStorage);
-  console.log(signCheck);
-  console.log(sessionStorage);
-   
-  if (signCheck) {
+  // If no email or password is passed, redirect to the login page
+  if (!email || !password) {
+    console.log("No credentials provided. Redirecting to login...");
+    window.location.href = "https://hulu-movie-app-log.vercel.app/"; // Redirect to login page
     return;
+  }
+
+  // Fetch the list of users from the JSONBin API
+  const usersList = await getUserData();
+  if (!usersList || usersList.length === 0) {
+    console.error("No users found in the database.");
+    return;
+  }
+
+  // Check if the provided email and password match any user
+  const userMatch = usersList.find(user => user.email === email && user.password === password);
+
+  if (userMatch) {
+    console.log("User verified. Welcome!");
+    // Here you can show a success message or navigate to a protected area
+    document.getElementById('welcome-message').innerText = `Welcome back, ${userMatch.email}!`;
   } else {
-    // window.location.href = "https://hulu-movie-app-log.vercel.app/";
-    console.log(signCheck);
-    console.log(signCheck);
+    console.log("User credentials do not match.");
+    // Handle invalid login: alert the user and redirect to the login page
+    alert("Invalid credentials. Please log in again.");
+    window.location.href = "https://hulu-movie-app-log.vercel.app/"; // Redirect to login page
   }
 });
+
+// Helper function to fetch user data from JSONBin API
+async function getUserData() {
+  try {
+    const response = await fetch("https://api.jsonbin.io/v3/b/679ef92dad19ca34f8f85e47/latest", {
+      method: "GET",
+      headers: {
+        "X-Master-Key": "$2a$10$4iItJb8RzVJsw8nIJCh3B.eRCXyjjXxJC2zxmhmaRVZsaHxuw8TO2"
+      }
+    });
+
+    if (!response.ok) throw new Error("API request failed");
+
+    const data = await response.json();
+    
+    // Ensure it returns an array of users
+    return Array.isArray(data.record.users) ? data.record.users : [];
+  } catch (error) {
+    console.error("Error fetching API data:", error);
+    return []; // Return empty array to prevent errors
+  }
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 const xs = window.matchMedia("(max-width: 320px)");
 const x = window.matchMedia("(max-width: 375px)");
