@@ -37,7 +37,7 @@ window.addEventListener("load", async function () {
 
     if (!email || !password) {
       console.log("No credentials found. Redirecting to login.");
-      window.location.href = "https://hulu-movie-app-log.vercel.app/";
+      //window.location.href = "https://hulu-movie-app-log.vercel.app/";
       return;
     }
 
@@ -48,7 +48,7 @@ window.addEventListener("load", async function () {
     
     if (!usersList.length) {
       console.error("No users found in the database.");
-      window.location.href = "https://hulu-movie-app-log.vercel.app/";
+      //window.location.href = "https://hulu-movie-app-log.vercel.app/";
       return;
     }
 
@@ -60,11 +60,11 @@ window.addEventListener("load", async function () {
       document.getElementById("welcome-message").innerText = `Welcome back, ${userMatch.email}!`;
     } else {
       console.warn("User credentials do not match. Redirecting...");
-      window.location.href = "https://hulu-movie-app-log.vercel.app/";
+      //window.location.href = "https://hulu-movie-app-log.vercel.app/";
     }
   } catch (error) {
     console.error("An error occurred:", error);
-    window.location.href = "https://hulu-movie-app-log.vercel.app/";
+    //window.location.href = "https://hulu-movie-app-log.vercel.app/";
   }
 });
 
