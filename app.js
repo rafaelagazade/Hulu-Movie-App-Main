@@ -28,7 +28,7 @@ profileBtn.addEventListener("click", () => {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
- window.addEventListener("load", async () => {
+window.addEventListener("load", async () => {
   // Get the query parameters passed from the login page
   const urlParams = new URLSearchParams(window.location.search);
   const email = urlParams.get('email');
