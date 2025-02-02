@@ -28,42 +28,47 @@ profileBtn.addEventListener("click", () => {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-window.addEventListener("load", async () => {
-  // Get the query parameters passed from the login page
-  const urlParams = new URLSearchParams(window.location.search);
-  const email = urlParams.get('email');
-  const password = urlParams.get('password');
+window.addEventListener("load", async function () {
+  try {
+    // Get email and password from URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const email = urlParams.get("email");
+    const password = urlParams.get("password");
 
-  // If no email or password is passed, redirect to the login page
-  if (!email || !password) {
-    console.log("No credentials provided. Redirecting to login...");
-    window.location.href = "https://hulu-movie-app-log.vercel.app/"; // Redirect to login page
-    return;
-  }
+    if (!email || !password) {
+      console.log("No credentials found. Redirecting to login.");
+      window.location.href = "https://hulu-movie-app-log.vercel.app/";
+      return;
+    }
 
-  // Fetch the list of users from the JSONBin API
-  const usersList = await getUserData();
-  if (!usersList || usersList.length === 0) {
-    console.error("No users found in the database.");
-    return;
-  }
+    console.log("Checking user credentials...");
 
-  // Check if the provided email and password match any user
-  const userMatch = usersList.find(user => user.email === email && user.password === password);
+    // Fetch users from API (make sure this function runs inside load event)
+    const usersList = await getUserData();
+    
+    if (!usersList.length) {
+      console.error("No users found in the database.");
+      window.location.href = "https://hulu-movie-app-log.vercel.app/";
+      return;
+    }
 
-  if (userMatch) {
-    console.log("User verified. Welcome!");
-    // Here you can show a success message or navigate to a protected area
-    document.getElementById('welcome-message').innerText = `Welcome back, ${userMatch.email}!`;
-  } else {
-    console.log("User credentials do not match.");
-    // Handle invalid login: alert the user and redirect to the login page
-    alert("Invalid credentials. Please log in again.");
-    window.location.href = "https://hulu-movie-app-log.vercel.app/"; // Redirect to login page
+    // Validate user credentials
+    const userMatch = usersList.find(user => user.email === email && user.password === password);
+
+    if (userMatch) {
+      console.log("User authenticated successfully:", userMatch.email);
+      document.getElementById("welcome-message").innerText = `Welcome back, ${userMatch.email}!`;
+    } else {
+      console.warn("User credentials do not match. Redirecting...");
+      window.location.href = "https://hulu-movie-app-log.vercel.app/";
+    }
+  } catch (error) {
+    console.error("An error occurred:", error);
+    window.location.href = "https://hulu-movie-app-log.vercel.app/";
   }
 });
 
-// Helper function to fetch user data from JSONBin API
+// Function to fetch user data from JSONBin API
 async function getUserData() {
   try {
     const response = await fetch("https://api.jsonbin.io/v3/b/679ef92dad19ca34f8f85e47/latest", {
@@ -76,12 +81,12 @@ async function getUserData() {
     if (!response.ok) throw new Error("API request failed");
 
     const data = await response.json();
-    
-    // Ensure it returns an array of users
+
+    // Return users as an array
     return Array.isArray(data.record.users) ? data.record.users : [];
   } catch (error) {
     console.error("Error fetching API data:", error);
-    return []; // Return empty array to prevent errors
+    return []; // Return an empty array in case of an error
   }
 }
 
