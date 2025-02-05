@@ -46,7 +46,7 @@ profileBtn.addEventListener("click", async () => {
   }
 
   // Redirect to login page after logout
-  //window.location.href = "https://hulu-movie-app-log.vercel.app/";
+  window.location.href = "https://hulu-movie-app-log.vercel.app/";
 });
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -105,13 +105,13 @@ window.addEventListener("load", async () => {
     if (!sessionData || sessionData.length === 0) {
       console.log("No active session found.");
       // Optionally redirect to the login page if no session
-      // window.location.href = "https://your-login-page-url.com";
+       window.location.href = "https://your-login-page-url.com";
       return;
     }
 
     if (!usersList || usersList.length === 0) {
       console.error("No users found in the database.");
-      // window.location.href = "https://your-login-page-url.com"; // Redirect if no users
+       window.location.href = "https://your-login-page-url.com"; // Redirect if no users
       return;
     }
 
@@ -125,11 +125,11 @@ window.addEventListener("load", async () => {
       console.log("User session verified. Staying on the main page.");
     } else {
       console.log("Session does not match any user. Redirecting to login...");
-      // window.location.href = "https://your-login-page-url.com";
+       window.location.href = "https://your-login-page-url.com";
     }
   } catch (error) {
     console.error("Error during page load:", error);
-    // window.location.href = "https://your-login-page-url.com"; // Redirect on error
+     window.location.href = "https://your-login-page-url.com"; // Redirect on error
   }
 });
 
