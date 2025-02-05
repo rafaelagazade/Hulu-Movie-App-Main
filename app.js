@@ -51,23 +51,67 @@ profileBtn.addEventListener("click", async () => {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
+// Step 1: Define the getSessionData function
+async function getSessionData() {
+  try {
+    const response = await fetch("https://api.jsonbin.io/v3/b/679f1129e41b4d34e482a903", {
+      method: "GET",
+      headers: {
+        "X-Master-Key": "$2a$10$4iItJb8RzVJsw8nIJCh3B.eRCXyjjXxJC2zxmhmaRVZsaHxuw8TO2",  // Replace with your actual Master Key
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch session data.");
+    }
+
+    const data = await response.json();
+    return data.record.sessions; // Adjust based on how your JSONBin structure looks
+  } catch (error) {
+    console.error("Error fetching session data:", error);
+    return null;
+  }
+}
+
+// Step 2: Define the getUserData function
+async function getUserData() {
+  try {
+    const response = await fetch("https://api.jsonbin.io/v3/b/your-users-bin-id", {
+      method: "GET",
+      headers: {
+        "X-Master-Key": "$2a$10$4iItJb8RzVJsw8nIJCh3B.eRCXyjjXxJC2zxmhmaRVZsaHxuw8TO2",  // Replace with your actual Master Key
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch user data.");
+    }
+
+    const data = await response.json();
+    return data.record.users;  // Adjust based on the structure of your user data
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    return null;
+  }
+}
+
+// Step 3: Main page load logic
 window.addEventListener("load", async () => {
   try {
-    const sessionData = await getSessionData();  // Ensure this function is defined
-    const usersList = await getUserData();  // Ensure this function is defined
-
-    console.log("Session Data:", sessionData);
-    console.log("Users List:", usersList);
+    // Fetch session data and user data
+    const sessionData = await getSessionData();
+    const usersList = await getUserData();
 
     if (!sessionData || sessionData.length === 0) {
       console.log("No active session found.");
-      //window.location.href = "https://hulu-movie-app-log.vercel.app/"; // Redirect if no session
+      // Optionally redirect to the login page if no session
+      // window.location.href = "https://your-login-page-url.com";
       return;
     }
 
     if (!usersList || usersList.length === 0) {
       console.error("No users found in the database.");
-      //window.location.href = "https://hulu-movie-app-log.vercel.app/"; // Redirect if no users
+      // window.location.href = "https://your-login-page-url.com"; // Redirect if no users
       return;
     }
 
@@ -81,11 +125,11 @@ window.addEventListener("load", async () => {
       console.log("User session verified. Staying on the main page.");
     } else {
       console.log("Session does not match any user. Redirecting to login...");
-      //window.location.href = "https://hulu-movie-app-log.vercel.app/"; // Redirect to login
+      // window.location.href = "https://your-login-page-url.com";
     }
   } catch (error) {
     console.error("Error during page load:", error);
-    //window.location.href = "https://hulu-movie-app-log.vercel.app/";  // Redirect to login on error
+    // window.location.href = "https://your-login-page-url.com"; // Redirect on error
   }
 });
 
