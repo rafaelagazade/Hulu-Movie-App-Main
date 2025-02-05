@@ -76,7 +76,7 @@ async function getSessionData() {
 // Step 2: Define the getUserData function
 async function getUserData() {
   try {
-    const response = await fetch("https://api.jsonbin.io/v3/b/your-users-bin-id", {
+    const response = await fetch("https://api.jsonbin.io/v3/b/679ef92dad19ca34f8f85e47", {
       method: "GET",
       headers: {
         "X-Master-Key": "$2a$10$4iItJb8RzVJsw8nIJCh3B.eRCXyjjXxJC2zxmhmaRVZsaHxuw8TO2",  // Replace with your actual Master Key
