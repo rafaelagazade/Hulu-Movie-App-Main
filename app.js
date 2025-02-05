@@ -58,7 +58,7 @@ window.addEventListener("load", async () => {
 
     if (!sessionData || sessionData.length === 0) {
       console.log("No active session found.");
-      window.location.href = "https://hulu-movie-app-log.vercel.app/"; // Redirect if no session
+     // window.location.href = "https://hulu-movie-app-log.vercel.app/"; // Redirect if no session
       return;
     }
 
