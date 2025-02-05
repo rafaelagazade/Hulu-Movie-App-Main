@@ -46,7 +46,7 @@ profileBtn.addEventListener("click", async () => {
   }
 
   // Redirect to login page after logout
-  window.location.href = "https://hulu-movie-app-log.vercel.app/";
+  //window.location.href = "https://hulu-movie-app-log.vercel.app/";
 });
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -64,7 +64,7 @@ window.addEventListener("load", async () => {
 
     if (!usersList || usersList.length === 0) {
       console.error("No users found in the database.");
-      window.location.href = "https://hulu-movie-app-log.vercel.app/"; // Redirect if no users
+      //window.location.href = "https://hulu-movie-app-log.vercel.app/"; // Redirect if no users
       return;
     }
 
