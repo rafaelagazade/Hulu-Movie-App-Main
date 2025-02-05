@@ -21,78 +21,63 @@ const BASE_URL1 = "https://api.themoviedb.org/3";
 const API_URL =
   BASE_URL1 +
   "/discover/movie?77b75897bd6de248789745dbd1270fe7&&language=en-US&sort_by=popularity.desc";
-profileBtn.addEventListener("click", () => {
-  localStorage.removeItem("signData");
+profileBtn.addEventListener("click", async () => {
+  try {
+    // Remove local session data
+    localStorage.removeItem("signData");
+
+    // Clear session data from API (overwrites session bin with an empty array)
+    const response = await fetch("https://api.jsonbin.io/v3/b/679f1129e41b4d34e482a903", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Master-Key": "$2a$10$4iItJb8RzVJsw8nIJCh3B.eRCXyjjXxJC2zxmhmaRVZsaHxuw8TO2"
+      },
+      body: JSON.stringify({ sessions: [] }) // Clear all session data
+    });
+
+    if (response.ok) {
+      console.log("User logged out. Session data cleared.");
+    } else {
+      console.error("Failed to clear session data.");
+    }
+  } catch (error) {
+    console.error("Error clearing session:", error);
+  }
+
+  // Redirect to login page after logout
   window.location.href = "https://hulu-movie-app-log.vercel.app/";
 });
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-window.addEventListener("load", async function () {
-  try {
-    // Get email and password from URL parameters
-    const urlParams = new URLSearchParams(window.location.search);
-    const email = urlParams.get("email");
-    const password = urlParams.get("password");
+window.addEventListener("load", async () => {
+  const sessionData = await getSessionData();
+  const usersList = await getUserData();
 
-    if (!email || !password) {
-      console.log("No credentials found. Redirecting to login.");
-      //window.location.href = "https://hulu-movie-app-log.vercel.app/";
-      return;
-    }
+  if (!sessionData || sessionData.length === 0) {
+    console.log("No active session found.");
+    return;
+  }
 
-    console.log("Checking user credentials...");
+  if (!usersList || usersList.length === 0) {
+    console.error("No users found in the database.");
+    return;
+  }
 
-    // Fetch users from API (make sure this function runs inside load event)
-    const usersList = await getUserData();
+  // Extract session emails
+  const sessionEmails = sessionData.map(session => session.email);
 
-    
-    
-    if (!usersList.length) {
-      console.error("No users found in the database.");
-      //window.location.href = "https://hulu-movie-app-log.vercel.app/";
-      return;
-    }
+  // Check if any session email exists in the users list
+  const validSession = usersList.some(user => sessionEmails.includes(user.email));
 
-    // Validate user credentials
-    const userMatch = usersList.find(user => user.email === email && user.password === password);
-
-    if (userMatch) {
-      console.log("User authenticated successfully:", userMatch.email);
-      document.getElementById("welcome-message").innerText = `Welcome back, ${userMatch.email}!`;
-    } else {
-      console.warn("User credentials do not match. Redirecting...");
-      //window.location.href = "https://hulu-movie-app-log.vercel.app/";
-    }
-  } catch (error) {
-    console.error("An error occurred:", error);
-    //window.location.href = "https://hulu-movie-app-log.vercel.app/";
+  if (validSession) {
+    console.log("User session verified. Staying on the main page.");
+  } else {
+    console.log("Session does not match any user. Redirecting to login...");
+    window.location.href = "https://hulu-movie-app-log.vercel.app/"; // Change to your actual login page
   }
 });
-
-// Function to fetch user data from JSONBin API
-async function getUserData() {
-  try {
-    const response = await fetch("https://api.jsonbin.io/v3/b/679ef92dad19ca34f8f85e47/latest", {
-      method: "GET",
-      headers: {
-        "X-Master-Key": "$2a$10$4iItJb8RzVJsw8nIJCh3B.eRCXyjjXxJC2zxmhmaRVZsaHxuw8TO2"
-      }
-    });
-
-    if (!response.ok) throw new Error("API request failed");
-
-    const data = await response.json();
-
-    // Return users as an array
-    return Array.isArray(data.record.users) ? data.record.users : [];
-
-    console.log("5")
-  } catch (error) {
-    console.error("Error fetching API data:", error);
-    return []; // Return an empty array in case of an error
-  }
-}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
