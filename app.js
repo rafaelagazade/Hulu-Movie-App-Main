@@ -78,11 +78,11 @@ window.addEventListener("load", async () => {
       console.log("User session verified. Staying on the main page.");
     } else {
       console.log("Session does not match any user. Redirecting to login...");
-      window.location.href = "https://hulu-movie-app-log.vercel.app/";
+     // window.location.href = "https://hulu-movie-app-log.vercel.app/";
     }
   } catch (error) {
     console.error("Error during page load:", error);
-    window.location.href = "https://hulu-movie-app-log.vercel.app/";
+   // window.location.href = "https://hulu-movie-app-log.vercel.app/";
   }
 });
 
