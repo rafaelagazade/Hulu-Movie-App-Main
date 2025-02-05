@@ -61,13 +61,13 @@ window.addEventListener("load", async () => {
 
     if (!sessionData || sessionData.length === 0) {
       console.log("No active session found.");
-      window.location.href = "https://hulu-movie-app-log.vercel.app/"; // Redirect if no session
+      //window.location.href = "https://hulu-movie-app-log.vercel.app/"; // Redirect if no session
       return;
     }
 
     if (!usersList || usersList.length === 0) {
       console.error("No users found in the database.");
-      window.location.href = "https://hulu-movie-app-log.vercel.app/"; // Redirect if no users
+      //window.location.href = "https://hulu-movie-app-log.vercel.app/"; // Redirect if no users
       return;
     }
 
@@ -81,11 +81,11 @@ window.addEventListener("load", async () => {
       console.log("User session verified. Staying on the main page.");
     } else {
       console.log("Session does not match any user. Redirecting to login...");
-      window.location.href = "https://hulu-movie-app-log.vercel.app/"; // Redirect to login
+      //window.location.href = "https://hulu-movie-app-log.vercel.app/"; // Redirect to login
     }
   } catch (error) {
     console.error("Error during page load:", error);
-    window.location.href = "https://hulu-movie-app-log.vercel.app/";  // Redirect to login on error
+    //window.location.href = "https://hulu-movie-app-log.vercel.app/";  // Redirect to login on error
   }
 });
 
